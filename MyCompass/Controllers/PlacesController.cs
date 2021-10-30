@@ -26,21 +26,21 @@ namespace MyCompass.Controllers
         }
 
         // GET: Places/Details/5
-        public async Task<IActionResult> Details(string id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var placesModel = await _context.PlacesModel
-                .FirstOrDefaultAsync(m => m.Name == id);
-            if (placesModel == null)
+            var place = await _context.PlacesModel
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (place == null)
             {
                 return NotFound();
             }
 
-            return View(placesModel);
+            return View(place);
         }
 
         // GET: Places/Create
@@ -54,31 +54,31 @@ namespace MyCompass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Description,Latitude,Longitude")] PlacesModel placesModel)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Latitude,Longitude")] Place place)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(placesModel);
+                _context.Add(place);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(placesModel);
+            return View(place);
         }
 
         // GET: Places/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var placesModel = await _context.PlacesModel.FindAsync(id);
-            if (placesModel == null)
+            var place = await _context.PlacesModel.FindAsync(id);
+            if (place == null)
             {
                 return NotFound();
             }
-            return View(placesModel);
+            return View(place);
         }
 
         // POST: Places/Edit/5
@@ -86,9 +86,9 @@ namespace MyCompass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Name,Description,Latitude,Longitude")] PlacesModel placesModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Latitude,Longitude")] Place place)
         {
-            if (id != placesModel.Name)
+            if (id != place.Id)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace MyCompass.Controllers
             {
                 try
                 {
-                    _context.Update(placesModel);
+                    _context.Update(place);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PlacesModelExists(placesModel.Name))
+                    if (!PlaceExists(place.Id))
                     {
                         return NotFound();
                     }
@@ -113,41 +113,41 @@ namespace MyCompass.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(placesModel);
+            return View(place);
         }
 
         // GET: Places/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var placesModel = await _context.PlacesModel
-                .FirstOrDefaultAsync(m => m.Name == id);
-            if (placesModel == null)
+            var place = await _context.PlacesModel
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (place == null)
             {
                 return NotFound();
             }
 
-            return View(placesModel);
+            return View(place);
         }
 
         // POST: Places/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var placesModel = await _context.PlacesModel.FindAsync(id);
-            _context.PlacesModel.Remove(placesModel);
+            var place = await _context.PlacesModel.FindAsync(id);
+            _context.PlacesModel.Remove(place);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PlacesModelExists(string id)
+        private bool PlaceExists(int id)
         {
-            return _context.PlacesModel.Any(e => e.Name == id);
+            return _context.PlacesModel.Any(e => e.Id == id);
         }
     }
 }

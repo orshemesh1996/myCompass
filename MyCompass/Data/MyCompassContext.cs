@@ -14,12 +14,14 @@ namespace MyCompass.Data
         {
         }
 
-        public DbSet<MyCompass.Models.TripEventModel> TripEventModel { get; set; }
+        public DbSet<MyCompass.Models.TripEvent> TripEventModel { get; set; }
 
-        public DbSet<MyCompass.Models.UserModel> UserModel { get; set; }
+        public DbSet<MyCompass.Models.User> UserModel { get; set; }
 
-        public DbSet<MyCompass.Models.TripCategoriesModel> TripCategoriesModel { get; set; }
+        public DbSet<MyCompass.Models.TripCategories> TripCategoriesModel { get; set; }
 
-        public DbSet<MyCompass.Models.PlacesModel> PlacesModel { get; set; }
+        public DbSet<MyCompass.Models.Place> PlacesModel { get; set; }
+
+        public DbSet<MyCompass.Models.PlaceImage> PlaceImage { get; set; }
     }
 }
