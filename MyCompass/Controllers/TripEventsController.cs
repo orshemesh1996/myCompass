@@ -54,7 +54,7 @@ namespace MyCompass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Date,Duration,Notes")] TripEvent tripEvent)
+        public async Task<IActionResult> Create([Bind("Id,Title,Date,Duration,Notes,Categories")] TripEvent tripEvent)
         {
             if (ModelState.IsValid)
             {
@@ -62,6 +62,9 @@ namespace MyCompass.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewData["Categories"] = new SelectList(_context.TripCategoriesModel, "Id", "Name");
+            //ViewData["Categories"] = new SelectList(_context.Set<TripCategories>(), "Id", "Name");
             return View(tripEvent);
         }
 
@@ -78,6 +81,8 @@ namespace MyCompass.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["Categories"] = new SelectList(_context.TripCategoriesModel, "Id", "Name");
             return View(tripEvent);
         }
 
@@ -86,7 +91,7 @@ namespace MyCompass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Date,Duration,Notes")] TripEvent tripEvent)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Date,Duration,Notes,Categories")] TripEvent tripEvent)
         {
             if (id != tripEvent.Id)
             {
