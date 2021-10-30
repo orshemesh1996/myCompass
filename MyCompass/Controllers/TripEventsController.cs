@@ -22,7 +22,8 @@ namespace MyCompass.Controllers
         // GET: TripEvents
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TripEventModel.ToListAsync());
+            var webApplication16Context = _context.TripEventModel.Include(c => c.Place);
+            return View(await webApplication16Context.ToListAsync());
         }
 
         // GET: TripEvents/Details/5
@@ -46,6 +47,8 @@ namespace MyCompass.Controllers
         // GET: TripEvents/Create
         public IActionResult Create()
         {
+            ViewData["CategoryNames"] = new SelectList(_context.Set<TripCategories>(), "Id", "Name");
+            ViewData["PlaceName"] = new SelectList(_context.Set<Place>(), "Id", "Name");
             return View();
         }
 
@@ -54,17 +57,20 @@ namespace MyCompass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Date,Duration,Notes,Categories")] TripEvent tripEvent)
+        public async Task<IActionResult> Create([Bind("Id,Title,Categories,PlaceId,Date,Duration,Notes")] TripEvent tripEvent, int[] categories)
         {
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
             if (ModelState.IsValid)
             {
+                var a = _context.TripCategoriesModel.Where(x => categories.Contains(x.Id));
+                tripEvent.Categories = new List<TripCategories>();
+                tripEvent.Categories.AddRange(a);
+
                 _context.Add(tripEvent);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["Categories"] = new SelectList(_context.TripCategoriesModel, "Id", "Name");
-            //ViewData["Categories"] = new SelectList(_context.Set<TripCategories>(), "Id", "Name");
             return View(tripEvent);
         }
 
