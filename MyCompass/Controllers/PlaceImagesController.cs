@@ -62,8 +62,9 @@ namespace MyCompass.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (MemoryStream ms = new MemoryStream())
+                if (placeImage.ImageFile != null)
                 {
+                    MemoryStream ms = new MemoryStream();
                     placeImage.ImageFile.CopyTo(ms);
                     placeImage.Image = ms.ToArray();
                 }
@@ -108,8 +109,9 @@ namespace MyCompass.Controllers
 
             if (ModelState.IsValid)
             {
-                using (MemoryStream ms = new MemoryStream())
+                if (placeImage.ImageFile != null)
                 {
+                    MemoryStream ms = new MemoryStream();
                     placeImage.ImageFile.CopyTo(ms);
                     placeImage.Image = ms.ToArray();
                 }
