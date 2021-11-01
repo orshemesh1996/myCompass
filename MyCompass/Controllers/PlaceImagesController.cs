@@ -48,7 +48,7 @@ namespace MyCompass.Controllers
         // GET: PlaceImages/Create
         public IActionResult Create()
         {
-            ViewData["PlaceId"] = new SelectList(_context.PlacesModel, "Id", "Name");
+            ViewData["PlaceId"] = new SelectList(_context.PlacesModel.Where(p => p.PlaceImage == null), "Id", nameof(PlaceImage.Place.Name));
             return View();
         }
 
@@ -65,6 +65,7 @@ namespace MyCompass.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["PlaceId"] = new SelectList(_context.PlacesModel, "Id", "Name", placeImage.PlaceId);
             return View(placeImage);
         }
