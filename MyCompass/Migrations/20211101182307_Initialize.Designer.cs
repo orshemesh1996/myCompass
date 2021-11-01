@@ -10,8 +10,8 @@ using MyCompass.Data;
 namespace MyCompass.Migrations
 {
     [DbContext(typeof(MyCompassContext))]
-    [Migration("20211030153204_Init")]
-    partial class Init
+    [Migration("20211101182307_Initialize")]
+    partial class Initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -57,8 +57,8 @@ namespace MyCompass.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ImageURL")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<int>("PlaceId")
                         .HasColumnType("int");

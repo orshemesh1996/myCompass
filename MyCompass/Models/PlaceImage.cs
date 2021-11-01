@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,8 +12,11 @@ namespace MyCompass.Models
     {
         public int Id { get; set; }
 
-        [Display(Name = "Image URL")]
-        public string ImageURL { get; set; }
+        public byte[] Image { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Image File")]
+        public IFormFile ImageFile { get; set; }
 
         [Display(Name = "Place Name")]
         public int PlaceId { get; set; }

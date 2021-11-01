@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -57,10 +58,16 @@ namespace MyCompass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ImageURL,PlaceId")] PlaceImage placeImage)
+        public async Task<IActionResult> Create([Bind("Id,ImageFile,PlaceId")] PlaceImage placeImage)
         {
             if (ModelState.IsValid)
             {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    placeImage.ImageFile.CopyTo(ms);
+                    placeImage.Image = ms.ToArray();
+                }
+
                 _context.Add(placeImage);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -92,7 +99,7 @@ namespace MyCompass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageURL,PlaceId")] PlaceImage placeImage)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ImageFile,PlaceId")] PlaceImage placeImage)
         {
             if (id != placeImage.Id)
             {
@@ -101,6 +108,12 @@ namespace MyCompass.Controllers
 
             if (ModelState.IsValid)
             {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    placeImage.ImageFile.CopyTo(ms);
+                    placeImage.Image = ms.ToArray();
+                }
+
                 try
                 {
                     _context.Update(placeImage);
