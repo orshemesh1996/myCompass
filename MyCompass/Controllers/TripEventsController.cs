@@ -35,12 +35,15 @@ namespace MyCompass.Controllers
             }
 
             var tripEvent = await _context.TripEventModel
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(a => a.Categories).Include(b => b.Place).FirstOrDefaultAsync(m => m.Id == id);
+
             if (tripEvent == null)
             {
                 return NotFound();
             }
 
+            ViewData["CategoryNames"] = new SelectList(_context.Set<TripCategories>(), "Id", "Name");
+            ViewData["PlaceName"] = new SelectList(_context.Set<Place>(), "Id", "Name");
             return View(tripEvent);
         }
 
@@ -88,7 +91,8 @@ namespace MyCompass.Controllers
                 return NotFound();
             }
 
-            ViewData["Categories"] = new SelectList(_context.TripCategoriesModel, "Id", "Name");
+            ViewData["CategoryNames"] = new SelectList(_context.Set<TripCategories>(), "Id", "Name");
+            ViewData["PlaceName"] = new SelectList(_context.Set<Place>(), "Id", "Name");
             return View(tripEvent);
         }
 
@@ -97,7 +101,7 @@ namespace MyCompass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Date,Duration,Notes,Categories")] TripEvent tripEvent)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Categories,PlaceId,Date,Duration,Notes")] TripEvent tripEvent, int[] categories)
         {
             if (id != tripEvent.Id)
             {
@@ -108,6 +112,10 @@ namespace MyCompass.Controllers
             {
                 try
                 {
+                    var a = _context.TripCategoriesModel.Where(x => categories.Contains(x.Id));
+                    tripEvent.Categories = new List<TripCategories>();
+                    tripEvent.Categories.AddRange(a);
+
                     _context.Update(tripEvent);
                     await _context.SaveChangesAsync();
                 }

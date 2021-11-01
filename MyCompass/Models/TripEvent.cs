@@ -19,6 +19,7 @@ namespace MyCompass.Models
         public List<TripCategories> Categories { get; set; }
 
         [Required]
+        [Display(Name = "Place Name")]
         public int PlaceId { get; set; }
         public Place Place { get; set; }
 
