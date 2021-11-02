@@ -7,17 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MyCompass.Data;
 using MyCompass.Models;
+using MyCompass.Services;
 
 namespace MyCompass.Controllers
 {
     public class TripEventsController : Controller
     {
         private readonly MyCompassContext _context;
-        private readonly MyCompassContext _service;
+        private readonly TripEventService _service;
 
-        public TripEventsController(MyCompassContext context)
+
+        public TripEventsController(MyCompassContext context,TripEventService service )
         {
             _context = context;
+            _service = service;
         }
 
       
@@ -30,10 +33,8 @@ namespace MyCompass.Controllers
         public async Task<IActionResult> Search(string NameTrip,DateTime From)
         {
             // var articles = _context.TripEventModel.Where(x => x.Title.Contains(NameTrip));
-            var webApplication16Context = from tripEvent in _context.TripEventModel 
-                                          where tripEvent.Title.Contains(NameTrip) || tripEvent.Date > From
-                                          select tripEvent;
-            return View("Index", await webApplication16Context.ToListAsync());
+            var trips = _service.Search(NameTrip, From);
+            return View("Index", await trips.ToListAsync());
         }
 
         // GET: TripEvents/Details/5
