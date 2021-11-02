@@ -13,17 +13,27 @@ namespace MyCompass.Controllers
     public class TripEventsController : Controller
     {
         private readonly MyCompassContext _context;
+        private readonly MyCompassContext _service;
 
         public TripEventsController(MyCompassContext context)
         {
             _context = context;
         }
 
+      
         // GET: TripEvents
         public async Task<IActionResult> Index()
         {
             var webApplication16Context = _context.TripEventModel.Include(c => c.Place);
             return View(await webApplication16Context.ToListAsync());
+        }
+        public async Task<IActionResult> Search(string NameTrip,DateTime From)
+        {
+            // var articles = _context.TripEventModel.Where(x => x.Title.Contains(NameTrip));
+            var webApplication16Context = from tripEvent in _context.TripEventModel 
+                                          where tripEvent.Title.Contains(NameTrip) || tripEvent.Date > From
+                                          select tripEvent;
+            return View("Index", await webApplication16Context.ToListAsync());
         }
 
         // GET: TripEvents/Details/5
