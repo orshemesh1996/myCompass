@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MyCompass.Data;
 using MyCompass.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace MyCompass
 {
@@ -31,7 +32,19 @@ namespace MyCompass
 
             services.AddDbContext<MyCompassContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("MyCompassContext")));
+
+            // The user is limited to 10 minutes of login to the system
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
+            });
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options => {
+                options.LoginPath = "/Users/Login";
+                options.AccessDeniedPath = "/Users/AccessDenied";
+            });
         }
+
+        
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -50,6 +63,10 @@ namespace MyCompass
             app.UseStaticFiles();
 
             app.UseRouting();
+            
+            app.UseSession();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
@@ -62,3 +79,4 @@ namespace MyCompass
         }
     }
 }
+

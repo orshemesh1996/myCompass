@@ -2,23 +2,27 @@
 
 namespace MyCompass.Models
 {
+    public enum UserType
+    {
+        Client,
+        Admin
+    }
+
     public class User
     {
-        public int Id { get; set; }
-
-        [Display(Name = "First name")]
-        [Required(ErrorMessage = "This field is mandatory")]
-        [RegularExpression(@"^[a-zA-Z''-'\s]{1,40}$", ErrorMessage = "Characters are not allowed.")]
-        public string Name { get; set; }
+        [Key]
+        [Required]
+        public string Username { get; set; }
 
         [Required]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
         [EmailAddress]
         public string Email { get; set; }
 
-        public string FacebookId { get; set; }
+        public int Age { get; set; }
 
-        public string AccessToken { get; set; }
-
-        public bool IsAdmin { get; set; }
+        public UserType Type { get; set; } = UserType.Client;
     }
 }
