@@ -7,17 +7,15 @@ function getTemperature(lat,lon) {
 
     $.ajax({
         type: "GET",
-        url: 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=' + Api_key,
+        url: "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + Api_key,
+        dataType: 'jsonp',
         success: function (data) {
-            weather.innerHTML = data["weather"].description;
+            console.log("DATA::", data)
+            img = document.createElement("img");
+            weather.innerHTML = data["weather"][0]["description"];
             
-
-
-            // load the image of the state weather icon (rainy , sunny..)
-            //document.getElementById(divId + "_weatherImg").src = "http://openweathermap.org/img/w/" + data["weather"][index].icon + ".png";
-            //console.log(weatherContent[0]["description"]);
-            //document.getElementById(divId + "_weather").innerHTML =
-                //weatherContent[0]["main"] + ", " + weatherContent[index]["temp"] + '&#8451;';
+            img.src = "http://openweathermap.org/img/w/" + data["weather"][0].icon + ".png";
+            weather.appendChild(img);  
         }
     });
 }
