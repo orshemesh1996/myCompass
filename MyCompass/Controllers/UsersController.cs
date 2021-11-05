@@ -25,7 +25,7 @@ namespace MyCompass.Controllers
         }
 
         // GET: Users
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.UserModel.ToListAsync());
@@ -39,6 +39,7 @@ namespace MyCompass.Controllers
         }
 
         // GET: Users/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -75,7 +76,8 @@ namespace MyCompass.Controllers
                 if (q.Count() > 0)
                 {
                     LoginUser(q.First().Username, q.First().Type);
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Index", "TripEvents");
+                    //return RedirectToAction("TripEvents/Index");
                 }
                 else
                 {
@@ -162,7 +164,7 @@ namespace MyCompass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Username,Password,Email,Age,Type")] User user)
+        public async Task<IActionResult> Edit(string id, [Bind("Username,Password,Email,Age")] User user)
         {
             if (id != user.Username)
             {
@@ -189,10 +191,12 @@ namespace MyCompass.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             return View(user);
         }
 
         // GET: Users/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
@@ -211,6 +215,7 @@ namespace MyCompass.Controllers
         }
 
         // POST: Users/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)

@@ -20,7 +20,6 @@ namespace MyCompass.Controllers
             _logger = logger;
         }
 
-        [Authorize(Roles = "Client")]
         public IActionResult Index()
         {
             return View();
