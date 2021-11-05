@@ -10,8 +10,8 @@ using MyCompass.Data;
 namespace MyCompass.Migrations
 {
     [DbContext(typeof(MyCompassContext))]
-    [Migration("20211103182605_Init")]
-    partial class Init
+    [Migration("20211105132634_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
