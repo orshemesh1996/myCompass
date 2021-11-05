@@ -121,8 +121,6 @@ namespace MyCompass.Controllers
 
         private async void LoginUser(string username, UserType type)
         {
-            // HttpContext.Session.SetString("username", username);
-
             var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, username),
@@ -164,7 +162,7 @@ namespace MyCompass.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Username,Password,Email,Age")] User user)
+        public async Task<IActionResult> Edit(string id, [Bind("Username,Password,Email,Age")] User user, string MakeAdmin)
         {
             if (id != user.Username)
             {
@@ -175,6 +173,16 @@ namespace MyCompass.Controllers
             {
                 try
                 {
+                    // when you edit an admin personal details, make him stay to the role of admin
+                    if(MakeAdmin == null)
+                    {
+                        MakeAdmin = "on";
+                    }
+                    if (MakeAdmin == "on")
+                    {
+                        user.Type = UserType.Admin;
+                    }
+
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
