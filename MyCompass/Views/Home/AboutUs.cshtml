@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "About Us";
+}
+
+<div class="text-center">
+    <h1>About Us</h1>
+    <h3>Hi !! We are an ambitious team who like to travel around our beautiful country.</h3>
+    <div align="center">
+        <canvas id="myCanvas" width="200" height="100">
+            Your browser does not support the HTML5 canvas tag.
+        </canvas>
+    </div>
+</div>
+
+<script>
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    ctx.font = "20px Arial";
+    ctx.fillText("Introduction Video", 10, 90);
+</script>
+
+<div align="center">
+    <video width="640" height="480" controls>
+        <source src="~/Content/IntroductionVideo.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+</div>

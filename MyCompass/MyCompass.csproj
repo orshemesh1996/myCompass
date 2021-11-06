@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Content\IntroductionVideo.mp4" />
     <None Include="wwwroot\js\Weather.js" />
   </ItemGroup>
 
