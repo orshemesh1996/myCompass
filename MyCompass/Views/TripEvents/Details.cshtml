@@ -7,13 +7,10 @@
 @section scripts {
 
     <script type="text/javascript">
-
+        initCordinates(@Model.Place.Latitude, @Model.Place.Longitude);
         $(document).ready(function () {
-
-               getTemperature('@Model.Place.Latitude',@Model.Place.Longitude)
-
+            getTemperature(@Model.Place.Latitude, @Model.Place.Longitude);
         });
-
     </script>
 
 }
@@ -57,21 +54,24 @@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Categories)
         </dt>
-
         <dd class="col-sm-10">
             @foreach (var category in Model.Categories)
             {
                 <div>@category.Name</div>
             }
         </dd>
-
         <dt class="col-sm-2">
             Weather
         </dt>
-        <div id="weather">
+        <dd id="weather" class="col-sm-10">
 
-        </div>
-
+        </dd>
+        <dt class="col-sm-2">
+            Map
+        </dt>
+        <dd id="map" style="height: 300px; width: 300px" class="col-sm-7">
+            
+        </dd>
     </dl>
 </div>
 <div>

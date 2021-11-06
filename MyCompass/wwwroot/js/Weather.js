@@ -19,5 +19,3 @@ function getTemperature(lat,lon) {
         }
     });
 }
-
-
