@@ -1,4 +1,9 @@
-﻿function getPieChart() {
+﻿Categories = []
+function createCategoriesCounter(categories) {
+    console.log(categories);
+}
+
+function getPieChart() {
     var pie = new d3pie("pieChart", {
         "header": {
             "title": {
@@ -36,76 +41,6 @@
                     "label": "PHP",
                     "value": 114384,
                     "color": "#90c469"
-                },
-                {
-                    "label": "Python",
-                    "value": 95002,
-                    "color": "#daca61"
-                },
-                {
-                    "label": "C+",
-                    "value": 78327,
-                    "color": "#e4a14b"
-                },
-                {
-                    "label": "C",
-                    "value": 67706,
-                    "color": "#e98125"
-                },
-                {
-                    "label": "Objective-C",
-                    "value": 36344,
-                    "color": "#cb2121"
-                },
-                {
-                    "label": "Shell",
-                    "value": 28561,
-                    "color": "#830909"
-                },
-                {
-                    "label": "Cobol",
-                    "value": 24131,
-                    "color": "#923e99"
-                },
-                {
-                    "label": "C#",
-                    "value": 100,
-                    "color": "#ae83d5"
-                },
-                {
-                    "label": "Coldfusion",
-                    "value": 68,
-                    "color": "#bf273e"
-                },
-                {
-                    "label": "Fortran",
-                    "value": 218812,
-                    "color": "#ce2aeb"
-                },
-                {
-                    "label": "Coffeescript",
-                    "value": 157618,
-                    "color": "#bca44a"
-                },
-                {
-                    "label": "Node",
-                    "value": 114384,
-                    "color": "#618d1b"
-                },
-                {
-                    "label": "Basic",
-                    "value": 95002,
-                    "color": "#1ee67b"
-                },
-                {
-                    "label": "Cola",
-                    "value": 36344,
-                    "color": "#b0ec44"
-                },
-                {
-                    "label": "Perl",
-                    "value": 32170,
-                    "color": "#a4a0c9"
                 },
             ]
         },

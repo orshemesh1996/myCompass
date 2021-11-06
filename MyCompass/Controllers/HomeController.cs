@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace MyCompass.Controllers
 {
@@ -50,12 +52,17 @@ namespace MyCompass.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public async Task<IActionResult> TripCategoriesByTripEvent()
+        public String TripCategoriesByTripEvent()
         {
             // var tripCategories = await _context.TripCategoriesModel.ToListAsync();
             // var tripEvents = await _context.TripEventModel.ToListAsync();
-            var category = await _context.TripCategoriesModel.Include(c => c.TripEvents).ToListAsync();
-            return View(category);
+            var categories = _context.TripCategoriesModel.Include(c => c.TripEvents).ToList();
+            String result = JsonConvert.SerializeObject(categories, Formatting.Indented,
+            new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return result;
         }
     }
 }
