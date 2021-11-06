@@ -28,6 +28,18 @@
     <script src="~/js/Weather.js"></script>
     <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=getMap&key=AqOux8LQ1nDtCOueAX9gCY85g9ZR2E8VX5ofXZVQs_fpe3fmOAHBG4_te0GtvYSh' defer></script>
     <script src="~/js/BingMaps.js"></script>
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '478986713131749',
+                autoLogAppEvents: true,
+                xfbml: true,
+                version: 'v12.0'
+            });
+        };
+    </script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
