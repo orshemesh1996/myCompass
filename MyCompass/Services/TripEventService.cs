@@ -15,11 +15,10 @@ namespace MyCompass.Services
         {
             _context = context;
         }
-        public IQueryable<TripEvent> Search(string NameTrip, DateTime From)
+        public IQueryable<TripEvent> Search(string NameTrip, DateTime From, int Duration)
         {
-            // var articles = _context.TripEventModel.Where(x => x.Title.Contains(NameTrip));
             var webApplication16Context = from tripEvent in _context.TripEventModel
-                                          where tripEvent.Title.Contains(NameTrip) || tripEvent.Date > From
+                                          where tripEvent.Title.Contains(NameTrip) && tripEvent.Date > From && tripEvent.Duration == Duration
                                           select tripEvent;
             return webApplication16Context;
         }

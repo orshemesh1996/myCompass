@@ -32,10 +32,10 @@ namespace MyCompass.Controllers
             var webApplication16Context = _context.TripEventModel.Include(c => c.Place);
             return View(await webApplication16Context.ToListAsync());
         }
-        public async Task<IActionResult> Search(string NameTrip,DateTime From)
+        public async Task<IActionResult> Search(string NameTrip,DateTime From, int Duration)
         {
             // var articles = _context.TripEventModel.Where(x => x.Title.Contains(NameTrip));
-            var trips = _service.Search(NameTrip, From);
+            var trips = _service.Search(NameTrip, From, Duration);
             return View("Index", await trips.ToListAsync());
         }
 

@@ -4,11 +4,14 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h2 style="text-align: center">Trip Events</h2>
 
+<h5>Search</h5>
 <form asp-action="Search">
-    <input name="NameTrip" placeholder="Enter trip name " />
-    <input name="From" placeholder="From" type="datetime-local" />
+    <input class="mr-4" name="NameTrip" placeholder="Title" />
+    <label>From Date: </label>
+    <input class="mr-4" name="From" placeholder="From" type="datetime-local" />
+    <input class="mr-4" name="duration" placeholder="Duration" />
     <input type="submit" value="Search" />
 </form>
 <p>
