@@ -1,10 +1,5 @@
-﻿Categories = []
-function createCategoriesCounter(categories) {
-    console.log(categories);
-}
-
-function getPieChart() {
-    var pie = new d3pie("pieChart", {
+﻿function getPieChart(arr) {
+    new d3pie("pieChart", {
         "header": {
             "title": {
                 "text": "Trip Categories",
@@ -31,18 +26,7 @@ function getPieChart() {
         },
         "data": {
             "sortOrder": "value-desc",
-            "content": [
-                {
-                    "label": "Java",
-                    "value": 157618,
-                    "color": "#4daa4b"
-                },
-                {
-                    "label": "PHP",
-                    "value": 114384,
-                    "color": "#90c469"
-                },
-            ]
+            "content": arr
         },
         "labels": {
             "outer": {

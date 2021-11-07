@@ -6,6 +6,7 @@
 @section scripts {
 
     <script type="text/javascript">
+        var arr = [];
         $(document).ready(function () {
             $.ajax({
                 type: "GET",
@@ -14,13 +15,22 @@
                 async: false,
                 accepts: "application/json",
                 success: function (data) {
-                    console.log(data)
+                    data.forEach((category) => {
+                        var generateColor = "#999999";
+                        var piePeaceObject = {
+                            label: category.Name,
+                            value: category.TripEvents.length,
+                            color: generateColor
+                        }
+                        console.log('piePeaceObject = ' + piePeaceObject);
+                        arr.push(piePeaceObject);
+                    });
+                    //console.log(data);
                     //createCategoriesCounter(data);
                 }
             });
             
-//            var categoriesCounter = createCategoriesCounter();
-//            getPieChart();
+            getPieChart(arr);
         });
     </script>
 
