@@ -1,13 +1,13 @@
-﻿function getPieChart(arr) {
-    new d3pie("pieChart", {
+﻿function getPieChart(arr, id, title, subtitle) {
+    new d3pie(id, {
         "header": {
             "title": {
-                "text": "Trip Categories",
+                "text": title,
                 "fontSize": 24,
                 "font": "open sans"
             },
             "subtitle": {
-                "text": "A full pie chart to show the amount of trip categories around our website",
+                "text": subtitle,
                 "color": "#999999",
                 "fontSize": 12,
                 "font": "open sans"

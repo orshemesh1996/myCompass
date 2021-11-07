@@ -52,12 +52,21 @@ namespace MyCompass.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public String TripCategoriesByTripEvent()
+        public String TripCategoriesPieChart()
         {
-            // var tripCategories = await _context.TripCategoriesModel.ToListAsync();
-            // var tripEvents = await _context.TripEventModel.ToListAsync();
             var categories = _context.TripCategoriesModel.Include(c => c.TripEvents).ToList();
             String result = JsonConvert.SerializeObject(categories, Formatting.Indented,
+            new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            return result;
+        }
+
+        public String PlacesPieChart()
+        {
+            var places = _context.PlacesModel.Include(c => c.TripEvents).ToList();
+            String result = JsonConvert.SerializeObject(places, Formatting.Indented,
             new JsonSerializerSettings
             {
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore

@@ -6,40 +6,49 @@
 @section scripts {
 
     <script type="text/javascript">
-        var arr = [];
-        $(document).ready(function () {
-            $.ajax({
-                type: "GET",
-                url: 'https://localhost:44323/Home/TripCategoriesByTripEvent',
-                dataType: 'json',
-                async: false,
-                accepts: "application/json",
-                success: function (data) {
-                    data.forEach((category) => {
-                        var generateColor = "#999999";
-                        var piePeaceObject = {
-                            label: category.Name,
-                            value: category.TripEvents.length,
-                            color: generateColor
-                        }
-                        console.log('piePeaceObject = ' + piePeaceObject);
-                        arr.push(piePeaceObject);
-                    });
-                    //console.log(data);
-                    //createCategoriesCounter(data);
-                }
+        
+        var chartId = ["tripCategoriesPieChart", "placesPieChart"];
+        function generateChart(url, id, title, subtitle) {
+            var arr = [];
+            $(document).ready(function () {
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    dataType: 'json',
+                    async: false,
+                    accepts: "application/json",
+                    success: function (data) {
+                        var randomColor;
+                        data.forEach((value) => {
+                            randomColor = Math.floor(Math.random() * 16777215).toString(16);
+                            var piePeaceObject = {
+                                label: value.Name,
+                                value: value.TripEvents.length,
+                                color: "#" + randomColor
+                            }
+                            console.log('piePeaceObject = ' + piePeaceObject);
+                            arr.push(piePeaceObject);
+                        });
+                    }
+                });
+
+                getPieChart(arr, id, title, subtitle);
             });
-            
-            getPieChart(arr);
-        });
+        }
+
+        generateChart('https://localhost:44323/Home/TripCategoriesPieChart', chartId[0],
+            "Trip Categories Popularity", "A full pie chart to show the amount of trip categories around our website");
+
+        generateChart('https://localhost:44323/Home/PlacesPieChart', chartId[1],
+            "Places Popularity", "A full pie chart to show the amount of places around our website");
     </script>
 
 }
 
 <h3 class="display-4">Statistics</h3>
-<div class="text-center" id="pieChart">
+<div class="text-center" id="tripCategoriesPieChart">
 
 </div>
-<div asp-action="TripCategoriesByTripEvent">
-    
+<div class="text-center" id="placesPieChart">
+
 </div>
