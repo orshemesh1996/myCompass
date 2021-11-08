@@ -26,9 +26,10 @@ namespace MyCompass.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var places = _context.PlacesModel.Include(c => c.TripEvents).Include(i => i.PlaceImage);
+            return View(await places.ToListAsync());
         }
 
         public IActionResult Privacy()

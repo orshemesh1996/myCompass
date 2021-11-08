@@ -76,8 +76,7 @@ namespace MyCompass.Controllers
                 if (q.Count() > 0)
                 {
                     LoginUser(q.First().Username, q.First().Type);
-                    return RedirectToAction("Index", "TripEvents");
-                    //return RedirectToAction("TripEvents/Index");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {

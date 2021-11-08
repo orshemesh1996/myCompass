@@ -7,28 +7,32 @@
         </button>
         <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
             <ul class="navbar-nav flex-grow-1 align-items-center d-flex">
-                <li class="nav-item pl-3">
+                @{
+                    if (Context.User.IsInRole(UserType.Admin.ToString()))
+                    {
+                        <li class="dropdown">
+                            <button onclick="myFunction()" class="navbtn">Manager options</button>
+                            <div id="myDropdown" class="dropdown-content">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Places" asp-action="Index">Places</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="PlaceImages" asp-action="Index">Add Image to Place</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="TripCategories" asp-action="Index">Trip Categories</a>
+                            </div>
+                        </li>
+                    }
+                }
+                <li class="dropdown">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                 </li>
-                <li class="nav-item pl-3">
+                <li class="dropdown">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                 </li>
-                <li class="nav-item pl-3">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Places" asp-action="Index">Places</a>
-                </li>
-                <li class="nav-item pl-3">
+                <li class="dropdown">
                     <a class="nav-link text-dark" asp-area="" asp-controller="TripEvents" asp-action="Index">Trip Events</a>
                 </li>
-                <li class="nav-item pl-3">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="PlaceImages" asp-action="Index">Add Image to Place</a>
-                </li>
-                <li class="nav-item pl-3">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="TripCategories" asp-action="Index">Trip Categories</a>
-                </li>
-                <li class="nav-item pl-3">
+                <li class="dropdown">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AboutUs">About Us</a>
                 </li>
-                <li class="nav-item pl-3">
+                <li class="dropdown">
                     <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Statistics">Statistics</a>
                 </li>
             </ul>

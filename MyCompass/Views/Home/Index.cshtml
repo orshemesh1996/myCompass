@@ -1,9 +1,40 @@
-﻿@{
+﻿@model IEnumerable<MyCompass.Models.Place>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h2>Welcome to My Compass Website</h2>
+
+    @{
+        <div class="row increaseRowWidth">
+            @foreach (var item in Model)
+            {
+                <div class="col-2 mt-5 card" style="width: 14rem; margin-right: 7rem">
+                    @if (item.PlaceImage.Image != null)
+                    {
+                        string img = Convert.ToBase64String(item.PlaceImage.Image);
+                        <img class="card-img-top" src="data:image/png;base64,@img" />
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        @{
+                            @foreach (var eventItem in item.TripEvents)
+                            {
+                                <li class="list-group-item">
+                                    <a asp-action="Details" asp-route-id="@item.Id" asp-controller="TripEvents">@eventItem.Title</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+    }
+
     <div class="fb-page col-md-3" style="margin-top: 2.7%" data-href="https://www.facebook.com/My-Compass-104152812082779" data-tabs="posts" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
         <blockquote cite="https://www.facebook.com/My-Compass-104152812082779" class="fb-xfbml-parse-ignore">
             <a href="https://www.facebook.com/My-Compass-104152812082779">My Compass</a>
