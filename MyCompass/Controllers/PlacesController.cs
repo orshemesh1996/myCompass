@@ -24,13 +24,18 @@ namespace MyCompass.Controllers
         // GET: Places
         public async Task<IActionResult> Index()
         {
-            var webApplication16Context = _context.PlacesModel.Include(c => c.PlaceImage);
-            /*var imageToPlace = from place in _context.PlacesModel
+            //var webApplication16Context = _context.PlacesModel.Include(c => c.PlaceImage);
+            var imageToPlace = from place in _context.PlacesModel
                                join placeImage in _context.PlaceImage on place.Id equals placeImage.PlaceId
                                where place.Id == placeImage.PlaceId
-                               select place;*/
+                               select new Place{ Id = place.Id, 
+                                                 Name = place.Name,
+                                                 Description = place.Description,
+                                                 Latitude = place.Latitude,
+                                                 Longitude = place.Longitude,
+                                                 PlaceImage = placeImage };
 
-            return View(await webApplication16Context.ToListAsync());
+            return View(await imageToPlace.ToListAsync());
         }
 
         // GET: Places/Details/5
