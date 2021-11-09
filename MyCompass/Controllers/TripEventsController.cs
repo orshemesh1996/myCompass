@@ -12,6 +12,20 @@ using MyCompass.Services;
 
 namespace MyCompass.Controllers
 {
+    public class EventData
+    {
+        public int Count
+        {
+            get;
+            set;
+        }
+        public string Place
+        {
+            get;
+            set;
+        }
+    }
+
     [Authorize]
     public class TripEventsController : Controller
     {
@@ -32,11 +46,25 @@ namespace MyCompass.Controllers
             var webApplication16Context = _context.TripEventModel.Include(c => c.Place);
             return View(await webApplication16Context.ToListAsync());
         }
+
         public async Task<IActionResult> Search(string NameTrip,DateTime From, int Duration)
         {
-            // var articles = _context.TripEventModel.Where(x => x.Title.Contains(NameTrip));
             var trips = _service.Search(NameTrip, From, Duration);
             return View("Index", await trips.ToListAsync());
+        }
+
+        public List<EventData> CountNumberOfEventsByTrip()
+        {
+            List<EventData> placesObject = (from tripEvent in _context.TripEventModel
+                                            join place in _context.PlacesModel on tripEvent.PlaceId equals place.Id
+                                            group place by place.Name into g
+                                            select new EventData
+                                            {
+                                                Place = g.Key,
+                                                Count = g.Count()
+                                            }).ToList();
+
+            return placesObject;
         }
 
         // GET: TripEvents/Details/5
