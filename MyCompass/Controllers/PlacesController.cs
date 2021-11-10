@@ -24,7 +24,6 @@ namespace MyCompass.Controllers
         // GET: Places
         public async Task<IActionResult> Index()
         {
-            //var webApplication16Context = _context.PlacesModel.Include(c => c.PlaceImage);
             var imageToPlace = from place in _context.PlacesModel
                                join placeImage in _context.PlaceImage on place.Id equals placeImage.PlaceId
                                where place.Id == placeImage.PlaceId
