@@ -155,10 +155,22 @@ namespace MyCompass.Controllers
                 try
                 {
                     var a = _context.TripCategoriesModel.Where(x => categories.Contains(x.Id));
-                    tripEvent.Categories = new List<TripCategories>();
-                    tripEvent.Categories.AddRange(a);
+                    var UpdateTripEvent = _context.TripEventModel.Include(t => t.Categories).FirstOrDefault(x => x.Id == id);
 
-                    _context.Update(tripEvent);
+                    UpdateTripEvent.Categories = a.ToList();
+                    UpdateTripEvent.Date = tripEvent.Date;
+                    UpdateTripEvent.Duration = tripEvent.Duration;
+                    UpdateTripEvent.Id = tripEvent.Id;
+                    UpdateTripEvent.PlaceId = tripEvent.PlaceId;
+                    UpdateTripEvent.Title = tripEvent.Title;
+                    UpdateTripEvent.Place = tripEvent.Place;
+                    UpdateTripEvent.Notes = tripEvent.Notes;
+
+
+                    tripEvent.Categories = UpdateTripEvent.Categories;
+
+
+                    _context.Update(UpdateTripEvent);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
