@@ -15,10 +15,32 @@ namespace MyCompass.Services
         {
             _context = context;
         }
-        public IQueryable<TripEvent> Search(string NameTrip, DateTime From, int Duration)
+        public IQueryable<TripEvent> Search(string tripName, DateTime From, int Duration)
         {
+            bool ignoreDuration = false;
+            
+            if (Duration == 0)
+            {
+                ignoreDuration = true;
+            }
+
+            bool ignoreFrom = false;
+            DateTime dummy = new DateTime { };
+            if (From == dummy)
+            {
+                ignoreFrom = true;
+            }
+
+            bool ignoreTripName = false;
+            if (tripName == null)
+            {
+                ignoreTripName = true;
+            }
+
             var webApplication16Context = from tripEvent in _context.TripEventModel
-                                          where tripEvent.Title.Contains(NameTrip) && tripEvent.Date > From && tripEvent.Duration == Duration
+                                          where (ignoreTripName || tripEvent.Title.Contains(tripName)) &&
+                                          (ignoreFrom || tripEvent.Date > From) &&
+                                          (ignoreDuration || tripEvent.Duration == Duration)
                                           select tripEvent;
             return webApplication16Context;
         }
