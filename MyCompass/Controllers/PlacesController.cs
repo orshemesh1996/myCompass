@@ -72,7 +72,7 @@ namespace MyCompass.Controllers
             {
                 _context.Add(place);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create", "PlaceImages");
             }
             return View(place);
         }

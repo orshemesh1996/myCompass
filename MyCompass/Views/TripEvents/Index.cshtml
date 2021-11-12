@@ -14,92 +14,94 @@
     </script>
 }
 
+<br />
+<h2 style="text-align: center">Trip Events</h2>
+<br />
 
-    <h2 style="text-align: center">Trip Events</h2>
-
-    <h5>Search</h5>
-    <form asp-action="Search">
-        <input class="mr-4" name="NameTrip" placeholder="Title" />
-        <label>From Date: </label>
-        <input class="mr-4" name="From" placeholder="From" type="datetime-local" />
-        <input class="mr-4" name="duration" placeholder="Duration" />
-        <input type="submit" value="Search" />
-    </form>
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-    <br />
-    <h3 style="text-align: left">Trip Events Details</h3>
-    <table class="table">
-        <thead>
+<h5>Search</h5>
+<form asp-action="Search">
+    <input class="mr-4" name="NameTrip" placeholder="Title" />
+    <label>From Date: </label>
+    <input class="mr-4" name="From" placeholder="From" type="datetime-local" />
+    <input class="mr-4" name="duration" placeholder="Duration" />
+    <input type="submit" value="Search" />
+</form>
+<p>
+    <br/>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<br />
+<h3 style="text-align: left">Trip Events Details</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Place)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Date)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Duration)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Notes)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Place)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Date)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Duration)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Notes)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Place.Name)
-                    </td>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@item.Id">Details </a>
-                        @{
-                            if (Context.User.IsInRole(UserType.Admin.ToString()))
-                            {
-                                <a asp-action="Edit" asp-route-id="@item.Id">| Edit |</a>
-                                <a asp-action="Delete" asp-route-id="@item.Id"> Delete</a>
-                            }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Duration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Place.Name)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details </a>
+                    @{
+                        if (Context.User.IsInRole(UserType.Admin.ToString()))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.Id">| Edit |</a>
+                            <a asp-action="Delete" asp-route-id="@item.Id"> Delete</a>
                         }
+                    }
 
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <br />
-    <br />
-    <h3 style="text-align: left">Most Popular Places</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Place)
-                </th>
-                <th>
-                    Number of Events
-                </th>
+                </td>
             </tr>
-        </thead>
-        <tbody id="information">
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
+
+<br />
+<br />
+<h3 style="text-align: left">Most Popular Places</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Place)
+            </th>
+            <th>
+                Number of Events
+            </th>
+        </tr>
+    </thead>
+    <tbody id="information">
+    </tbody>
+</table>

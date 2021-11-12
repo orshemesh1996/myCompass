@@ -113,7 +113,7 @@ namespace MyCompass.Controllers
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 LoginUser(user.Username, UserType.Client);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Home");
             }
             return View(user);
         }
@@ -172,17 +172,17 @@ namespace MyCompass.Controllers
             {
                 try
                 {
-                    // when you edit an admin personal details, make him stay to the role of admin
-                    if(MakeAdmin == null)
-                    {
-                        MakeAdmin = "on";
-                    }
+                    var currentUser = _context.UserModel.FirstOrDefault(user1 => user1.Username == id);
+
+                    currentUser.Age = user.Age;
+                    currentUser.Password = user.Password;
+                    currentUser.Email = user.Email;
+                    currentUser.Username = user.Username;
                     if (MakeAdmin == "on")
                     {
-                        user.Type = UserType.Admin;
+                        currentUser.Type = UserType.Admin;
                     }
 
-                    _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

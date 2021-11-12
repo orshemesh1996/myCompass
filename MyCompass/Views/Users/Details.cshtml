@@ -4,10 +4,8 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
 <div>
-    <h4>User</h4>
+    <h4>User Details</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -15,12 +13,6 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Username)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Password)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Email)

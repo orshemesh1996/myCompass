@@ -6,7 +6,7 @@
         </button>
         <div>
             <ul class="nav-list">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">My Compass</a>
+                <a class="navbar-brand font-weight-bold" asp-area="" asp-controller="Home" asp-action="Index">My Compass</a>
                 @{
                     if (Context.User.IsInRole(UserType.Admin.ToString()))
                     {
