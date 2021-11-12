@@ -26,7 +26,7 @@
                             @foreach (var eventItem in item.TripEvents)
                             {
                                 <li class="list-group-item">
-                                    <a asp-action="Details" asp-route-id="@item.Id" asp-controller="TripEvents">@eventItem.Title</a>
+                                    <a asp-action="Details" asp-route-id="@eventItem.Id" asp-controller="TripEvents">@eventItem.Title</a>
                                     <br />
                                     <div>@eventItem.Date</div>
                                 </li>
