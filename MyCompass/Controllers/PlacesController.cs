@@ -25,14 +25,17 @@ namespace MyCompass.Controllers
         public async Task<IActionResult> Index()
         {
             var imageToPlace = from place in _context.PlacesModel
-                               join placeImage in _context.PlaceImage on place.Id equals placeImage.PlaceId
-                               where place.Id == placeImage.PlaceId
-                               select new Place{ Id = place.Id, 
-                                                 Name = place.Name,
-                                                 Description = place.Description,
-                                                 Latitude = place.Latitude,
-                                                 Longitude = place.Longitude,
-                                                 PlaceImage = placeImage };
+                               join placeImage in _context.PlaceImage on place.Id equals placeImage.PlaceId into pi
+                               from placeImage in pi.DefaultIfEmpty()
+                               select new Place
+                               {
+                                   Id = place.Id,
+                                   Name = place.Name,
+                                   Description = place.Description,
+                                   Latitude = place.Latitude,
+                                   Longitude = place.Longitude,
+                                   PlaceImage = placeImage
+                               };
 
             return View(await imageToPlace.ToListAsync());
         }
@@ -72,7 +75,7 @@ namespace MyCompass.Controllers
             {
                 _context.Add(place);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Create", "PlaceImages");
+                return RedirectToAction(nameof(Index));
             }
             return View(place);
         }
